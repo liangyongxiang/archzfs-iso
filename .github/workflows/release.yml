@@ -14,20 +14,11 @@ jobs:
 
     steps:
       - uses: actions/checkout@v2
-    
-      - uses: uraimo/run-on-arch-action@v2.0.5
-        name: Run commands
-        id: runcmd
-        with:
-          arch: armv7
-          distro: ubuntu18.04
-        
-          # Set an output parameter `uname` for use in subsequent steps
-          run: |
-            uname -a
-            echo ::set-output name=uname::$(uname -a)
 
-      - name: Build image
-        run: |
-          pacman -S archiso
-          mkarchiso -v -w work -o out .
+      - name: Install Archlinux
+        run: curl -L https://github.com/zaoqi/github-actions-archlinux/raw/master/install.sh | sh
+
+        - name: Build image
+          run: |
+            sudo pacman -S archiso
+            mkarchiso -v -w work -o out .
